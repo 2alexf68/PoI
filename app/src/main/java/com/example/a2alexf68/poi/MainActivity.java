@@ -121,20 +121,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.add_location) {//id to resolve !!!!
+        if (item.getItemId() == R.id.add_location) {
             Intent intent = new Intent(this, AddLocation.class);
             startActivityForResult(intent, 0);
             return true;
-        } else if (item.getItemId() == R.id.set_location) {//id to resolve !!!!
+
+        } else if (item.getItemId() == R.id.set_location) {
             Intent intent = new Intent(this, SetLocation.class);
             startActivityForResult(intent, 1);
+            return true;
+        } else if (item.getItemId() == R.id.preference)
+
+        {
+            Intent intent = new Intent(this, Preference.class);
+            startActivityForResult(intent, 2);
             return true;
         }
         return false;
     }
-
 
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 

@@ -1,9 +1,18 @@
 <resources>
     <string name="app_name">Points of Interest</string>
+
     <string name="Latitude">Latitude</string>
     <string name="Longitude">Longitude</string>
+
     <string name="set_location">Set Location</string>
     <string name="add_location">Add Location</string>
     <string name="save_location">Save Location</string>
+    <string name="load_location">Load Location</string>
+
     <string name="preference">Preference</string>
+    <string name="pref1">Save on device</string>
+    <string name="pref1a">Select this options to save on device</string>
+
+    <string name="pref2">Save on device</string>
+    <string name="pref2a">Select this options to save online</string>
 </resources>

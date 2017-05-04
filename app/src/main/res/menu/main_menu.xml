@@ -10,6 +10,9 @@
         android:id="@+id/save_location"
         android:title="@string/save_location" />
     <item
+        android:id="@+id/load_location"
+        android:title="@string/load_location" />
+    <item
         android:id="@+id/preference"
         android:title="@string/preference" />
 </menu>

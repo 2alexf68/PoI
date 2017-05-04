@@ -14,6 +14,7 @@ import android.widget.EditText;
  */
 public class AddLocation extends AppCompatActivity implements View.OnClickListener {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,23 +29,16 @@ public class AddLocation extends AppCompatActivity implements View.OnClickListen
         //retrieve our lat and long values from the edit boxes
         EditText nameEditText = (EditText) findViewById(R.id.poi_name);
 
-        // to verify again !!!!
-
         //double.parsedouble() allows to transform a string into a double type
         EditText typeEditText = (EditText) findViewById(R.id.poi_type);
-        // to verify again !!!!
 
         EditText descriptionEditText = (EditText) findViewById(R.id.poi_description);
-        // to verify again !!!!
 
         //assemble our lat long bundle
-
-       Bundle newpoiBundle = new Bundle();
-
-        newpoiBundle.putString("com.example.name", name);
-        newpoiBundle.putString("com.example.type", type);
-        newpoiBundle.putString("com.example.description", description);
-
+        Bundle newpoiBundle = new Bundle();
+        newpoiBundle.putString("com.example.poi_name", poi_name);
+        newpoiBundle.putString("com.example.poi_type", poi_type);
+        newpoiBundle.putString("com.example.poi_description",String);
         //gives the box which contains information; send the bundle to the parent activity
         Intent intent = new Intent();
         intent.putExtras(newpoiBundle);
