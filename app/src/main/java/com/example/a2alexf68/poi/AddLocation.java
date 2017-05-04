@@ -41,10 +41,9 @@ public class AddLocation extends AppCompatActivity implements View.OnClickListen
 
        Bundle newpoiBundle = new Bundle();
 
-        newpoiBundle.putString("com.example.latitude", name);
-        newpoiBundle.putString("com.example.longitude", type);
-        newpoiBundle.putString("com.example.longitude", description);
-
+        newpoiBundle.putString("com.example.name", name);
+        newpoiBundle.putString("com.example.type", type);
+        newpoiBundle.putString("com.example.description", description);
 
         //gives the box which contains information; send the bundle to the parent activity
         Intent intent = new Intent();

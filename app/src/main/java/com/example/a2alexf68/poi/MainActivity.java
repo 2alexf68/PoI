@@ -49,12 +49,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mv.setBuiltInZoomControls(true);
         mv.getController().setZoom(14);
         mv.getController().setCenter(new GeoPoint(50.9319, -1.4011));
-
         /*
         Button submitButton = (Button) findViewById(R.id.locationButton);
         submitButton.setOnClickListener(this);
         */
-
         markerGestureListener = new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
             public boolean onItemLongPress(int i, OverlayItem item) {
                 Toast.makeText(MainActivity.this, item.getSnippet(), Toast.LENGTH_SHORT).show();
@@ -66,14 +64,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
             }
         };
-
         items = new ItemizedIconOverlay<OverlayItem>(this, new ArrayList<OverlayItem>(), markerGestureListener);
         OverlayItem milano = new OverlayItem("Milano", "City in north Italy", new GeoPoint(45.4641, 9.1928));
         // OverlayItem blackdown = new OverlayItem("Blackdown", "highest point in West Sussex", new GeoPoint(51.0581, -0.6897));
         items.addItem(milano);
         //items.addItem(blackdown);
         mv.getOverlays().add(items);
-
 
         BufferedReader reader = null;
         try {
@@ -91,17 +87,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         List.setMarker(getResources().getDrawable(R.drawable.restaurant));
                     }
                     items.addItem(List);
-
                 }
-
-
             }
-
             reader.close();
         } catch (IOException e) {
             new AlertDialog.Builder(this).setMessage("ERROR: " + e).show();
         }
-
     }
 
     @Override
@@ -136,8 +127,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(this, AddLocation.class);
             startActivityForResult(intent, 0);
             return true;
-        }
-        else if(item.getItemId() == R.id.set_location) {//id to resolve !!!!
+        } else if (item.getItemId() == R.id.set_location) {//id to resolve !!!!
             Intent intent = new Intent(this, SetLocation.class);
             startActivityForResult(intent, 1);
             return true;
