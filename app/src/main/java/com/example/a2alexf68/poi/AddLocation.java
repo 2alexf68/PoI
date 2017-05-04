@@ -27,23 +27,28 @@ public class AddLocation extends AppCompatActivity implements View.OnClickListen
     public void onClick(View view) {
         //retrieve our lat and long values from the edit boxes
         EditText nameEditText = (EditText) findViewById(R.id.poi_name);
-        string name = (nameEditText.getText().toString());// to verify again !!!!
+
+        // to verify again !!!!
 
         //double.parsedouble() allows to transform a string into a double type
         EditText typeEditText = (EditText) findViewById(R.id.poi_type);
-        string type = (typeEditText.getText().toString());// to verify again !!!!
+        // to verify again !!!!
 
-        EditText descriptionEditText = (EditText) findViewById(R.id.poi_type);
-        string description = (descriptionEditText.getText().toString());// to verify again !!!!
+        EditText descriptionEditText = (EditText) findViewById(R.id.poi_description);
+        // to verify again !!!!
 
         //assemble our lat long bundle
-        Bundle latlongBundle = new Bundle();
-        latlongBundle.putDouble("com.example.latitude", latitude);
-        latlongBundle.putDouble("com.example.longitude", longitude);
+
+       Bundle newpoiBundle = new Bundle();
+
+        newpoiBundle.putString("com.example.latitude", name);
+        newpoiBundle.putString("com.example.longitude", type);
+        newpoiBundle.putString("com.example.longitude", description);
+
 
         //gives the box which contains information; send the bundle to the parent activity
         Intent intent = new Intent();
-        intent.putExtras(latlongBundle);
+        intent.putExtras(newpoiBundle);
         //if it arrives at this part of the code send the message that everything is okay
         setResult(RESULT_OK, intent);
         finish();

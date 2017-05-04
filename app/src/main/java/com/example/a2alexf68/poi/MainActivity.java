@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.add_location) {//id to resolve !!!!
-            Intent intent = new Intent(this, SetLocation.class);
+            Intent intent = new Intent(this, AddLocation.class);
             startActivityForResult(intent, 0);
             return true;
         }

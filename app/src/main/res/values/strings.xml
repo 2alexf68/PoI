@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">PoI</string>
+    <string name="app_name">Points of Interest</string>
     <string name="Latitude">Latitude</string>
     <string name="Longitude">Longitude</string>
     <string name="set_location">Set Location</string>
     <string name="add_location">Add Location</string>
+    <string name="save_location">Save Location</string>
 </resources>
