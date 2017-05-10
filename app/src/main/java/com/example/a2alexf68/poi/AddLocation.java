@@ -18,27 +18,30 @@ public class AddLocation extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_location);//id to resolve?
+        setContentView(R.layout.add_location);
 
-        Button submitButton = (Button) findViewById(R.id.poi_button);//id to resolve?
+        Button submitButton = (Button) findViewById(R.id.poi_button);
         submitButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        //retrieve our lat and long values from the edit boxes
-        EditText nameEditText = (EditText) findViewById(R.id.poi_name);
-
-        //double.parsedouble() allows to transform a string into a double type
-        EditText typeEditText = (EditText) findViewById(R.id.poi_type);
-
-        EditText descriptionEditText = (EditText) findViewById(R.id.poi_description);
-
-        //assemble our lat long bundle
+        //assemble our bundle
         Bundle newpoiBundle = new Bundle();
-        newpoiBundle.putString("com.example.poi_name", poi_name);
-        newpoiBundle.putString("com.example.poi_type", poi_type);
-        newpoiBundle.putString("com.example.poi_description",String);
+
+        EditText nameEditText = (EditText)findViewById(R.id.poi_name);
+        String name = nameEditText.getText().toString();
+
+        EditText typeEditText = (EditText)findViewById(R.id.poi_type);
+        String type = nameEditText.getText().toString();
+
+        EditText descriptionEditText = (EditText)findViewById(R.id.poi_description);
+        String description = nameEditText.getText().toString();
+
+        newpoiBundle.putString("Name",name);
+        newpoiBundle.putString("Type",type );
+        newpoiBundle.putString("Description", description);
+
         //gives the box which contains information; send the bundle to the parent activity
         Intent intent = new Intent();
         intent.putExtras(newpoiBundle);

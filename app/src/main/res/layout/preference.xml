@@ -16,17 +16,4 @@
         android:layout_height="wrap_content"
         android:text="@string/pref1a"
         android:textSize="10pt" />
-    <TextView
-        android:id="@+id/setting2"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/pref2"
-        android:textSize="12pt" />
-
-    <TextView
-        android:id="@+id/setting2a"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/pref2a"
-        android:textSize="10pt" />
 </LinearLayout>

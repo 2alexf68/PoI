@@ -25,7 +25,9 @@ import org.osmdroid.views.overlay.Polyline;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 
@@ -95,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    //------------------------------------------------------------------------------------------getting new coordinates
     @Override
     public void onClick(View view) {
         EditText latitudeEditText = (EditText) findViewById(R.id.latitudeEditText);
@@ -115,13 +118,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    //---------------------------------------------------------------------------options menu
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);//id to resolve !!!!
         return true;
     }
 
+    //-------------------------------------------------------------------------I/O file how to save the file just without adding each edit text
     public boolean onOptionsItemSelected(MenuItem item) {
+        String dir_path = Environment.getExternalStorageDirectory().getAbsolutePath();
+        //EditText et = (EditText) findViewById(R.id.editText1);
+
         if (item.getItemId() == R.id.add_location) {
             Intent intent = new Intent(this, AddLocation.class);
             startActivityForResult(intent, 0);
@@ -138,9 +146,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivityForResult(intent, 2);
             return true;
         }
+        if (item.getItemId() == R.id.save_location) {
+
+            try {
+                FileWriter fw = new FileWriter(dir_path + "/poi.txt");
+                PrintWriter pw = new PrintWriter(fw);
+
+
+                //pw.print(et.getText().toString());
+                pw.flush();
+                pw.close(); // close the file to ensure data is flushed to file
+
+            } catch (IOException e) {
+                System.out.println("I/O Error: " + e);
+            }
+            return true;
+        } else if (item.getItemId() == R.id.load_location) {
+            try {
+                FileReader fr = new FileReader(dir_path + "/poi.txt");
+                BufferedReader br = new BufferedReader(fr);
+
+                // et.setText(br.readLine());
+
+                String line = "";
+                while ((line = br.readLine()) != null) {
+                    System.out.println(line);
+                }
+                br.close();
+
+                return true;
+
+            } catch (IOException e) {
+                System.out.println("I/O Error: " + e);
+            }
+        }
         return false;
     }
 
+    //--------------------------------------------------------extract bundle information
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
         if (requestCode == 0) {
@@ -155,11 +198,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 Bundle extras = intent.getExtras();
-                double latitude = extras.getDouble("com.example.coordinate");
-                double longitude = extras.getDouble("com.example.coordinate");
-                //double latitude = Double.parseDouble();
-                //double longitude = Double.parseDouble();
-                mv.getController().setCenter(new GeoPoint(longitude, latitude));
+
+                String name = extras.getString("name");
+                String type = extras.getString("type");
+                String description = extras.getString("description");
+
+                // mv.getController().setCenter(new GeoPoint(longitude, latitude));
             }
         }
     }
