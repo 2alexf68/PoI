@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         };
+
         items = new ItemizedIconOverlay<OverlayItem>(this, new ArrayList<OverlayItem>(), markerGestureListener);
 
         OverlayItem milano = new OverlayItem("Milano", "City in north Italy", new GeoPoint(45.4641, 9.1928));
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         OverlayItem uni = new OverlayItem("Solent", "University", new GeoPoint(50.9319, -1.4011));
         items.addItem(uni);
-
+        //adds the overlay item aka marker on the map
         mv.getOverlays().add(items);
         /*
         BufferedReader reader = null;
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    //-------------------------------------------------------------------------I/O file save/load the file from local 
+    //-------------------------------------------------------------------------I/O file save/load the file from local
     public boolean onOptionsItemSelected(MenuItem item) {
         String dir_path = Environment.getExternalStorageDirectory().getAbsolutePath();
 
@@ -122,21 +123,23 @@ public class MainActivity extends AppCompatActivity {
                 FileWriter fw = new FileWriter(dir_path + "/poi.txt");
                 PrintWriter pw = new PrintWriter(fw);
 
-                for (int i = 0; i < items.size(); i++) {
-                    //pw.print(et.getText().toString());
-                    // pw.flush();
-                    // pw.close(); // close the file to ensure data is flushed to file
-                }
 
+                for (int i = 0; i < items.size(); i++) {
+                    OverlayItem marker = items.getItem(i);
+                    pw.println(marker.getTitle() + "," + marker.getSnippet() + "," + marker.getPoint().getLongitude() + "," + marker.getPoint().getLongitude());
+                    pw.println("\n");
+              }
+                pw.close(); // close the file to ensure data is flushed to file
             } catch (IOException e) {
                 System.out.println("I/O Error: " + e);
             }
             return true;
         } else if (item.getItemId() == R.id.load_location) {
+
             try {
                 FileReader fr = new FileReader(dir_path + "/poi.txt");
                 BufferedReader br = new BufferedReader(fr);
-
+                /*
                 for (int i = 0; i < items.size(); i++) {
                     OverlayItem item = items.Item(i);
 
@@ -149,13 +152,14 @@ public class MainActivity extends AppCompatActivity {
                     br.close();
                 }
                 return true;
-
+                */
             } catch (IOException e) {
                 System.out.println("I/O Error: " + e);
             }
         }
         return false;
     }
+
     //--------------------------------------------------------extract bundle information
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
