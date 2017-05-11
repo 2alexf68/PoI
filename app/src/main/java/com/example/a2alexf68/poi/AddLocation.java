@@ -29,17 +29,17 @@ public class AddLocation extends AppCompatActivity implements View.OnClickListen
         //assemble our bundle
         Bundle newpoiBundle = new Bundle();
 
-        EditText nameEditText = (EditText)findViewById(R.id.poi_name);
+        EditText nameEditText = (EditText) findViewById(R.id.poi_name);
         String name = nameEditText.getText().toString();
 
-        EditText typeEditText = (EditText)findViewById(R.id.poi_type);
+        EditText typeEditText = (EditText) findViewById(R.id.poi_type);
         String type = typeEditText.getText().toString();
 
-        EditText descriptionEditText = (EditText)findViewById(R.id.poi_description);
+        EditText descriptionEditText = (EditText) findViewById(R.id.poi_description);
         String description = descriptionEditText.getText().toString();
 
-        newpoiBundle.putString("Name",name);
-        newpoiBundle.putString("Type",type );
+        newpoiBundle.putString("Name", name);
+        newpoiBundle.putString("Type", type);
         newpoiBundle.putString("Description", description);
 
         //gives the box which contains information; send the bundle to the parent activity

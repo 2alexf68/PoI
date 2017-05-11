@@ -11,8 +11,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import org.osmdroid.config.Configuration;
@@ -104,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    //-------------------------------------------------------------------------I/O file how to save the file
+    //-------------------------------------------------------------------------I/O file save/load the file from local 
     public boolean onOptionsItemSelected(MenuItem item) {
         String dir_path = Environment.getExternalStorageDirectory().getAbsolutePath();
 
@@ -124,9 +122,11 @@ public class MainActivity extends AppCompatActivity {
                 FileWriter fw = new FileWriter(dir_path + "/poi.txt");
                 PrintWriter pw = new PrintWriter(fw);
 
-                //pw.print(et.getText().toString());
-                // pw.flush();
-                // pw.close(); // close the file to ensure data is flushed to file
+                for (int i = 0; i < items.size(); i++) {
+                    //pw.print(et.getText().toString());
+                    // pw.flush();
+                    // pw.close(); // close the file to ensure data is flushed to file
+                }
 
             } catch (IOException e) {
                 System.out.println("I/O Error: " + e);
@@ -136,19 +136,18 @@ public class MainActivity extends AppCompatActivity {
             try {
                 FileReader fr = new FileReader(dir_path + "/poi.txt");
                 BufferedReader br = new BufferedReader(fr);
-                /*
-                for(int i=0; i<items.size(); i++) {
+
+                for (int i = 0; i < items.size(); i++) {
                     OverlayItem item = items.Item(i);
-                }
-                */
-                // et.setText(br.readLine());
 
-                String line = "";
-                while ((line = br.readLine()) != null) {
-                    System.out.println(line);
-                }
-                br.close();
+                    // et.setText(br.readLine());
 
+                    String line = "";
+                    while ((line = br.readLine()) != null) {
+                        System.out.println(line);
+                    }
+                    br.close();
+                }
                 return true;
 
             } catch (IOException e) {
