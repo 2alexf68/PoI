@@ -4,9 +4,6 @@
         android:id="@+id/add_location"
         android:title="@string/add_location" />
     <item
-        android:id="@+id/set_location"
-        android:title="@string/set_location" />
-    <item
         android:id="@+id/save_location"
         android:title="@string/save_location" />
     <item

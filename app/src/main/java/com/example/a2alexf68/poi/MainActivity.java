@@ -62,14 +62,16 @@ public class MainActivity extends AppCompatActivity {
         };
 
         items = new ItemizedIconOverlay<OverlayItem>(this, new ArrayList<OverlayItem>(), markerGestureListener);
-
+        /*
         OverlayItem milano = new OverlayItem("Milano", "City in north Italy", new GeoPoint(45.4641, 9.1928));
         items.addItem(milano);
 
         OverlayItem uni = new OverlayItem("Solent", "University", new GeoPoint(50.9319, -1.4011));
         items.addItem(uni);
+        */
         //adds the overlay item aka marker on the map
         mv.getOverlays().add(items);
+
     }
 
     //---------------------------------------------------------------------------options menu
@@ -117,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/poi.txt";
                 reader = new BufferedReader(new FileReader(path));
                 String line = "";
-                while ((line = reader.readLine()) != null) {
+                while ((line = reader.readLine()) != null) { //--------------------------------------its loading the first marker only
                     System.out.print(line);
                     String[] components = line.split(",");
                     if (components.length == 4) {

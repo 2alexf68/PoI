@@ -20,8 +20,9 @@ public class Preference extends ListActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        data = new String[]{"Save on device", "Save online"};
-        details = new String[]{"Select to save locations on local storage", "Select to save locations online"};
+
+        data = new String[]{"Save online"};
+        details = new String[]{"Select to save locations online"};
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data);
         setListAdapter(adapter);
