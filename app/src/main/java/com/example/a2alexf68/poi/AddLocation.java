@@ -33,10 +33,10 @@ public class AddLocation extends AppCompatActivity implements View.OnClickListen
         String name = nameEditText.getText().toString();
 
         EditText typeEditText = (EditText)findViewById(R.id.poi_type);
-        String type = nameEditText.getText().toString();
+        String type = typeEditText.getText().toString();
 
         EditText descriptionEditText = (EditText)findViewById(R.id.poi_description);
-        String description = nameEditText.getText().toString();
+        String description = descriptionEditText.getText().toString();
 
         newpoiBundle.putString("Name",name);
         newpoiBundle.putString("Type",type );

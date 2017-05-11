@@ -31,9 +31,10 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
     MapView mv;
     ItemizedIconOverlay<OverlayItem> items;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,17 +45,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setContentView(R.layout.activity_main);
         mv = (MapView) findViewById(R.id.map1);
-
-        ItemizedIconOverlay<OverlayItem> items;
-        ItemizedIconOverlay.OnItemGestureListener<OverlayItem> markerGestureListener;
-
         mv.setBuiltInZoomControls(true);
         mv.getController().setZoom(14);
         mv.getController().setCenter(new GeoPoint(50.9319, -1.4011));
-        /*
-        Button submitButton = (Button) findViewById(R.id.locationButton);
-        submitButton.setOnClickListener(this);
-        */
+
+        ItemizedIconOverlay.OnItemGestureListener<OverlayItem> markerGestureListener;
+
         markerGestureListener = new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
             public boolean onItemLongPress(int i, OverlayItem item) {
                 Toast.makeText(MainActivity.this, item.getSnippet(), Toast.LENGTH_SHORT).show();
@@ -67,12 +63,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         };
         items = new ItemizedIconOverlay<OverlayItem>(this, new ArrayList<OverlayItem>(), markerGestureListener);
-        OverlayItem milano = new OverlayItem("Milano", "City in north Italy", new GeoPoint(45.4641, 9.1928));
-        // OverlayItem blackdown = new OverlayItem("Blackdown", "highest point in West Sussex", new GeoPoint(51.0581, -0.6897));
-        items.addItem(milano);
-        //items.addItem(blackdown);
-        mv.getOverlays().add(items);
 
+        OverlayItem milano = new OverlayItem("Milano", "City in north Italy", new GeoPoint(45.4641, 9.1928));
+        items.addItem(milano);
+
+        OverlayItem uni = new OverlayItem("Solent", "University", new GeoPoint(50.9319, -1.4011));
+        items.addItem(uni);
+
+        mv.getOverlays().add(items);
+        /*
         BufferedReader reader = null;
         try {
             String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/poi.txt";
@@ -82,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 System.out.print(line);
                 String[] components = line.split(",");
                 if (components.length == 5) {
-                    OverlayItem List = new OverlayItem(components[0], components[2], new GeoPoint(Double.parseDouble(components[4]), Double.parseDouble(components[3])));
+                    OverlayItem List = new OverlayItem(components[0], components[1], components[2], new GeoPoint(Double.parseDouble(components[4]), Double.parseDouble(components[3])));
                     if (components[1].equals("pub")) {
                         List.setMarker(getResources().getDrawable(R.drawable.pub));
                     } else if (components[1].equals("restaurant")) {
@@ -95,53 +94,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } catch (IOException e) {
             new AlertDialog.Builder(this).setMessage("ERROR: " + e).show();
         }
-    }
-
-    //------------------------------------------------------------------------------------------getting new coordinates
-    @Override
-    public void onClick(View view) {
-        EditText latitudeEditText = (EditText) findViewById(R.id.latitudeEditText);
-        String latitudeAsString = latitudeEditText.getText().toString();
-
-        EditText longitudeEditText = (EditText) findViewById(R.id.longitudeEditText);
-        String longitudeAsString = longitudeEditText.getText().toString();
-
-        if (latitudeAsString.isEmpty() || longitudeAsString.isEmpty()) {
-            mv.getController().setCenter(new GeoPoint(41.1, 12.1));
-            mv.getController().setZoom(10);
-        } else {
-            double latitude = Double.parseDouble(latitudeAsString);
-            double longitude = Double.parseDouble(longitudeAsString);
-
-            mv.getController().setCenter(new GeoPoint(longitude, latitude));
-        }
-
+         */
     }
 
     //---------------------------------------------------------------------------options menu
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);//id to resolve !!!!
+        inflater.inflate(R.menu.main_menu, menu);
         return true;
     }
 
-    //-------------------------------------------------------------------------I/O file how to save the file just without adding each edit text
+    //-------------------------------------------------------------------------I/O file how to save the file
     public boolean onOptionsItemSelected(MenuItem item) {
         String dir_path = Environment.getExternalStorageDirectory().getAbsolutePath();
-        //EditText et = (EditText) findViewById(R.id.editText1);
 
         if (item.getItemId() == R.id.add_location) {
             Intent intent = new Intent(this, AddLocation.class);
             startActivityForResult(intent, 0);
             return true;
 
-        } else if (item.getItemId() == R.id.set_location) {
-            Intent intent = new Intent(this, SetLocation.class);
-            startActivityForResult(intent, 1);
-            return true;
-        } else if (item.getItemId() == R.id.preference)
-
-        {
+        } else if (item.getItemId() == R.id.preference) {
             Intent intent = new Intent(this, Preference.class);
             startActivityForResult(intent, 2);
             return true;
@@ -152,10 +124,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 FileWriter fw = new FileWriter(dir_path + "/poi.txt");
                 PrintWriter pw = new PrintWriter(fw);
 
-
                 //pw.print(et.getText().toString());
-                pw.flush();
-                pw.close(); // close the file to ensure data is flushed to file
+                // pw.flush();
+                // pw.close(); // close the file to ensure data is flushed to file
 
             } catch (IOException e) {
                 System.out.println("I/O Error: " + e);
@@ -165,7 +136,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             try {
                 FileReader fr = new FileReader(dir_path + "/poi.txt");
                 BufferedReader br = new BufferedReader(fr);
-
+                /*
+                for(int i=0; i<items.size(); i++) {
+                    OverlayItem item = items.Item(i);
+                }
+                */
                 // et.setText(br.readLine());
 
                 String line = "";
@@ -182,11 +157,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return false;
     }
-
     //--------------------------------------------------------extract bundle information
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
-        if (requestCode == 0) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 0) {
+                Bundle extras = intent.getExtras();
+
+                String name = extras.getString("Name");
+                String type = extras.getString("Type");
+                String description = extras.getString("Description");
+
+                double lat = mv.getMapCenter().getLatitude();
+                double lon = mv.getMapCenter().getLongitude();
+
+                OverlayItem item = new OverlayItem("" + name, "" + type, "" + description, new GeoPoint(lat, lon));
+                items.addItem(item);
+            }
+
+            // Force the map to redraw
+            mv.invalidate();
+        }
+        if (requestCode == 1) {
 
             if (resultCode == RESULT_OK) {
                 Bundle extras = intent.getExtras();
@@ -195,16 +187,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     mv.setTileSource(TileSourceFactory.MAPNIK);
                 }
             }
-        } else if (requestCode == 1) {
-            if (resultCode == RESULT_OK) {
-                Bundle extras = intent.getExtras();
-
-                String name = extras.getString("name");
-                String type = extras.getString("type");
-                String description = extras.getString("description");
-
-                // mv.getController().setCenter(new GeoPoint(longitude, latitude));
-            }
         }
     }
 }
+
