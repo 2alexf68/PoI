@@ -9,6 +9,15 @@
     <item
         android:id="@+id/load_location"
         android:title="@string/load_location" />
+
+    <item
+        android:id="@+id/save_toweb"
+        android:title="@string/save_toweb" />
+
+    <item
+        android:id="@+id/load_fromweb"
+        android:title="@string/load_fromweb" />
+
     <item
         android:id="@+id/preference"
         android:title="@string/preference" />

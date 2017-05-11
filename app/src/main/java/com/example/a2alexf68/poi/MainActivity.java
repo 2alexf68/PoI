@@ -3,6 +3,7 @@ package com.example.a2alexf68.poi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -25,7 +26,12 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -94,8 +100,15 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, Preference.class);
             startActivityForResult(intent, 2);
             return true;
-        }
-        if (item.getItemId() == R.id.save_location) {
+        } else if (item.getItemId() == R.id.load_fromweb) {
+            LoadFromWeb lfw = new LoadFromWeb();
+            lfw.execute();
+            return true;
+        } else if (item.getItemId() == R.id.save_toweb) {
+            SaveToWeb stw = new SaveToWeb();
+            stw.execute();
+            return true;
+        } else if (item.getItemId() == R.id.save_location) {
 
             try {
                 new AlertDialog.Builder(this).setMessage(dir_path).setPositiveButton("OK", null).show();
@@ -141,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
         mv.invalidate();
         return false;
     }
+
     //--------------------------------------------------------extract bundle information
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
@@ -172,5 +186,88 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    //LOAD from the web class to the main activity as over layed items, markers
+    class LoadFromWeb extends AsyncTask<Void, Void, ItemizedIconOverlay<OverlayItem>> {
+        public ItemizedIconOverlay<OverlayItem> doInBackground(Void... unused) {
+            HttpURLConnection conn = null;
+            try {
+                URL url = new URL("http://www.free-map.org.uk/course/mad/ws/get.php?year=17&username=user002&format=csv");
+                conn = (HttpURLConnection) url.openConnection();
+                InputStream in = conn.getInputStream();
+                if (conn.getResponseCode() == 200) {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                    String line = "";
+                    while ((line = reader.readLine()) != null) { //--------------------------------------its loading the first marker only
+                        String[] components = line.split(",");
+                        if (components.length == 5) {
+                            OverlayItem List = new OverlayItem(components[0], components[1], components[2], new GeoPoint(Double.parseDouble(components[4]), Double.parseDouble(components[3])));
+                            if (components[1].equals("pub")) {
+                                List.setMarker(getResources().getDrawable(R.drawable.pub));
+                            } else if (components[1].equals("restaurant")) {
+                                List.setMarker(getResources().getDrawable(R.drawable.restaurant));
+                            }
+                            items.addItem(List);
+                        }
+                    }
+                    return items;
+                }
+                return null;
+            } catch (IOException e) {
+                return null;
+            } finally {
+                if (conn != null)
+                    conn.disconnect();
+            }
+        }
+
+        //initialize the data from the web
+        public void onPostExecute(ItemizedIconOverlay<OverlayItem> itemsp) {
+            mv.getOverlays().add(itemsp);
+            mv.invalidate();
+        }
+    }
+
+    //SAVE to the web class to the main activity as over layed items, markers
+    class SaveToWeb extends AsyncTask<String, Void, String> {
+        public String doInBackground(String... params) {
+            HttpURLConnection conn = null;
+            try {
+                URL urlObj = new URL("http://www.free-map.org.uk/course/mad/ws/addhit.php");
+                conn = (HttpURLConnection) urlObj.openConnection();
+
+                String postData = "username=user002&name" + params[0] + "&type=" + params[1] + "&description=" + params[2] + "&lat=" + params[3] + "&lon=" + params[4] + "&year=17";
+
+                conn.setDoOutput(true);
+                conn.setFixedLengthStreamingMode(postData.length());
+
+                OutputStream out = null;
+                out = conn.getOutputStream();
+                out.write(postData.getBytes());
+                if (conn.getResponseCode() == 200) {
+                    InputStream in = conn.getInputStream();
+                    BufferedReader br = new BufferedReader(new InputStreamReader(in));
+                    String all = "", line;
+                    while ((line = br.readLine()) != null)
+                        all += line;
+                    return all;
+                } else
+                    return "HTTP ERROR: " + conn.getResponseCode();
+
+            } catch (IOException e) {
+                return e.toString();
+            }
+        }
+
+        //execute to send the data from the web
+        public void onPostExecute(String results) {
+            //new AlertDialog.Builder(getActivity()).setMessage("Uploaded!" + results).setPositiveButton("OK", null).show();
+        }
+    }
+
+    public void upload(String name, String type, String desc, double lat, double lon) {
+        SaveToWeb save = new SaveToWeb();
+        save.execute(name, type, desc, String.valueOf(lat), String.valueOf(lon));
     }
 }

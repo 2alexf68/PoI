@@ -5,8 +5,12 @@
     <string name="Longitude">Longitude</string>
 
     <string name="add_location">Add Location</string>
-    <string name="save_location">Save All Locations</string>
-    <string name="load_location">Load Location</string>
+    <string name="save_location">Save all locations</string>
+    <string name="save_toweb">Upload</string>
+
+
+    <string name="load_location">Load locations</string>
+    <string name="load_fromweb">Load from web</string>
 
     <string name="preference">Preference</string>
     <string name="pref1">Save on device</string>
