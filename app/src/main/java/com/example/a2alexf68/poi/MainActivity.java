@@ -71,28 +71,7 @@ public class MainActivity extends AppCompatActivity {
         //adds the overlay item aka marker on the map
         mv.getOverlays().add(items);
         /*
-        BufferedReader reader = null;
-        try {
-            String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/poi.txt";
-            reader = new BufferedReader(new FileReader(path));
-            String line = "";
-            while ((line = reader.readLine()) != null) {
-                System.out.print(line);
-                String[] components = line.split(",");
-                if (components.length == 5) {
-                    OverlayItem List = new OverlayItem(components[0], components[1], components[2], new GeoPoint(Double.parseDouble(components[4]), Double.parseDouble(components[3])));
-                    if (components[1].equals("pub")) {
-                        List.setMarker(getResources().getDrawable(R.drawable.pub));
-                    } else if (components[1].equals("restaurant")) {
-                        List.setMarker(getResources().getDrawable(R.drawable.restaurant));
-                    }
-                    items.addItem(List);
-                }
-            }
-            reader.close();
-        } catch (IOException e) {
-            new AlertDialog.Builder(this).setMessage("ERROR: " + e).show();
-        }
+
          */
     }
 
@@ -120,42 +99,74 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.save_location) {
 
             try {
+                new AlertDialog.Builder(this).setMessage(dir_path).setPositiveButton("OK", null).show();
+
                 FileWriter fw = new FileWriter(dir_path + "/poi.txt");
                 PrintWriter pw = new PrintWriter(fw);
 
-
                 for (int i = 0; i < items.size(); i++) {
                     OverlayItem marker = items.getItem(i);
-                    pw.println(marker.getTitle() + "," + marker.getSnippet() + "," + marker.getPoint().getLongitude() + "," + marker.getPoint().getLongitude());
-                    pw.println("\n");
-              }
+                    pw.println(marker.getTitle() + "," + marker.getSnippet() + "," + marker.getPoint().getLatitude() + "," + marker.getPoint().getLongitude());
+                }
                 pw.close(); // close the file to ensure data is flushed to file
             } catch (IOException e) {
-                System.out.println("I/O Error: " + e);
+                new AlertDialog.Builder(this).setMessage(e.toString()).setPositiveButton("OK", null).show();
             }
             return true;
         } else if (item.getItemId() == R.id.load_location) {
+            //-----------------------------------------------load locations
+            BufferedReader reader = null;
+            try {
+                String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/poi.txt";
+                reader = new BufferedReader(new FileReader(path));
+                String line = "";
+                while ((line = reader.readLine()) != null) {
+                    System.out.print(line);
+                    String[] components = line.split(",");
+                    if (components.length == 4) {
+                        OverlayItem List = new OverlayItem(components[0], components[1], new GeoPoint(Double.parseDouble(components[3]), Double.parseDouble(components[2])));
+                        if (components[1].equals("pub")) {
+                            List.setMarker(getResources().getDrawable(R.drawable.pub));
+                        } else if (components[1].equals("restaurant")) {
+                            List.setMarker(getResources().getDrawable(R.drawable.restaurant));
+                        }
+                        items.addItem(List);
+                    }
+                }
+                reader.close();
+            } catch (IOException e) {
+                new AlertDialog.Builder(this).setMessage("ERROR: " + e).show();
+            }
+            /*
+            BufferedReader reader = new BufferedReader(new FileReader("staff.csv"));
+            String line;
+            while((line=reader.read.Line() != null)
+            {
+                String[]components = line.split(",");
+                if(components.length==4)
+                {
+                  //  Item currentItem = new Item (componenets[0], componenets[1], componenets[2], componenets[3]);
+            //        item.add(currentItem);
+                }
 
             try {
+                new AlertDialog.Builder(this).setMessage(dir_path).setPositiveButton("OK", null).show();
+
                 FileReader fr = new FileReader(dir_path + "/poi.txt");
                 BufferedReader br = new BufferedReader(fr);
-                /*
-                for (int i = 0; i < items.size(); i++) {
-                    OverlayItem item = items.Item(i);
 
-                    // et.setText(br.readLine());
-
-                    String line = "";
-                    while ((line = br.readLine()) != null) {
-                        System.out.println(line);
-                    }
-                    br.close();
+                //et.setText(br.readLine());
+                String line = "";
+                while ((line = br.readLine()) != null) {
+                    System.out.println(line);
                 }
+                br.close();
                 return true;
-                */
             } catch (IOException e) {
                 System.out.println("I/O Error: " + e);
+                new AlertDialog.Builder(this).setMessage(dir_path).setPositiveButton("OK", null).show();
             }
+            */
         }
         return false;
     }
@@ -174,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
                 double lat = mv.getMapCenter().getLatitude();
                 double lon = mv.getMapCenter().getLongitude();
 
-                OverlayItem item = new OverlayItem("" + name, "" + type, "" + description, new GeoPoint(lat, lon));
+                OverlayItem item = new OverlayItem(name, description, new GeoPoint(lat, lon));
                 items.addItem(item);
             }
 
@@ -193,4 +204,3 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
-
