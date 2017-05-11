@@ -70,9 +70,6 @@ public class MainActivity extends AppCompatActivity {
         items.addItem(uni);
         //adds the overlay item aka marker on the map
         mv.getOverlays().add(items);
-        /*
-
-         */
     }
 
     //---------------------------------------------------------------------------options menu
@@ -135,42 +132,13 @@ public class MainActivity extends AppCompatActivity {
                 }
                 reader.close();
             } catch (IOException e) {
-                new AlertDialog.Builder(this).setMessage("ERROR: " + e).show();
-            }
-            /*
-            BufferedReader reader = new BufferedReader(new FileReader("staff.csv"));
-            String line;
-            while((line=reader.read.Line() != null)
-            {
-                String[]components = line.split(",");
-                if(components.length==4)
-                {
-                  //  Item currentItem = new Item (componenets[0], componenets[1], componenets[2], componenets[3]);
-            //        item.add(currentItem);
-                }
-
-            try {
-                new AlertDialog.Builder(this).setMessage(dir_path).setPositiveButton("OK", null).show();
-
-                FileReader fr = new FileReader(dir_path + "/poi.txt");
-                BufferedReader br = new BufferedReader(fr);
-
-                //et.setText(br.readLine());
-                String line = "";
-                while ((line = br.readLine()) != null) {
-                    System.out.println(line);
-                }
-                br.close();
-                return true;
-            } catch (IOException e) {
-                System.out.println("I/O Error: " + e);
+                //new AlertDialog.Builder(this).setMessage("ERROR: " + e).show();
                 new AlertDialog.Builder(this).setMessage(dir_path).setPositiveButton("OK", null).show();
             }
-            */
         }
+        mv.invalidate();
         return false;
     }
-
     //--------------------------------------------------------extract bundle information
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
