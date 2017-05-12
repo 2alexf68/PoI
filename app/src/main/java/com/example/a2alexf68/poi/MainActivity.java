@@ -261,9 +261,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
-
     public void upload(String name, String type, String description, double lat, double lon) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         boolean autosave= prefs.getBoolean("autosave", true);

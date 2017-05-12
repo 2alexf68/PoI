@@ -3,6 +3,6 @@
         android:id="@+id/pref1"
         android:defaultValue="true"
         android:key="autosave"
-        android:summary="Auto-save data?"
+        android:summary="Auto save data?"
         android:title="Auto Save" />
 </PreferenceScreen>
