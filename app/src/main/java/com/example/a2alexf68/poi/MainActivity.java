@@ -38,6 +38,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     MapView mv;
+    boolean returnTick = false;
+    boolean uploadB = false;
     ItemizedIconOverlay<OverlayItem> items;
 
 
@@ -159,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
             if (requestCode == 0) {
                 Bundle extras = intent.getExtras();
 
+
                 String name = extras.getString("Name");
                 String type = extras.getString("Type");
                 String description = extras.getString("Description");
@@ -166,10 +169,13 @@ public class MainActivity extends AppCompatActivity {
                 double lat = mv.getMapCenter().getLatitude();
                 double lon = mv.getMapCenter().getLongitude();
 
-                OverlayItem item = new OverlayItem(name, description, new GeoPoint(lat, lon));
+                OverlayItem item = new OverlayItem(name, description, new GeoPoint(lat, lon));//--------------not done
+                if (uploadB) {
+                    upload(name, type, description, lat, lon);
+                    //name, type, description, String.valueOf(lat), String.valueOf(lon)
+                }
                 items.addItem(item);
             }
-
             // Force the map to redraw
             mv.invalidate();
         }
@@ -259,28 +265,28 @@ public class MainActivity extends AppCompatActivity {
 
         //execute to send the data from the web
         public void onPostExecute(String results) {
-            //new AlertDialog.Builder(getActivity()).setMessage("Uploaded!" + results).setPositiveButton("OK", null).show();
+            // new AlertDialog.Builder(this.get().setMessage("Uploaded!" + results).setPositiveButton("OK", null).show(); //not finished
         }
     }
-/*
-    public void onStart() {//----this is not done yet
+
+    public void onStart() {//------------------this is not done yet
         super.onStart();
-        if (!returned) { //---?
+        if (!returnTick) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             boolean autodownload = prefs.getBoolean("autodownload", true);
             if (prefs.getBoolean("autosave", true)) {
                 Toast.makeText(this, "Auto save", Toast.LENGTH_SHORT).show();
-                upload = true;
+                uploadB = true;
             } else {
-                Toast.makeText(this, "Not uploading", Toast.LENGTH_SHORT).show();
-                upload = false;
+                Toast.makeText(this, "Not uploading", Toast.LENGTH_SHORT).show();//------------------not working only shows auto save
+                uploadB = false;
             }
             // do something with the preference data...
         }
-
-    public void upload(String name, String type, String desc, double lat, double lon) {
-        SaveToWeb save = new SaveToWeb();
-        save.execute(name, type, desc, String.valueOf(lat), String.valueOf(lon));
     }
-    */
+
+    public void upload(String name, String type, String description, double lat, double lon) {
+        SaveToWeb save = new SaveToWeb();
+        save.execute(name, type, description, String.valueOf(lat), String.valueOf(lon));
+    }
 }
