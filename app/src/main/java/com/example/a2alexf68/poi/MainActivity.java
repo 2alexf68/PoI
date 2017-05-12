@@ -261,15 +261,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //execute to send the data from the web
-    public void onPostExecute(String results) {
-        //new AlertDialog.Builder(.setMessage("Uploaded!" + results).setPositiveButton("OK", null).show(); //not finished
-    }
 
-    public void onStart() {//------------------this is not done yet
-        super.onStart();
 
-    }
 
     public void upload(String name, String type, String description, double lat, double lon) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -280,9 +273,8 @@ public class MainActivity extends AppCompatActivity {
             SaveToWeb save = new SaveToWeb();
             save.execute(name, type, description, String.valueOf(lat), String.valueOf(lon));
         } else {
-            Toast.makeText(this, "Not uploading", Toast.LENGTH_SHORT).show();//------------------not working only shows auto save
+            Toast.makeText(this, "Not uploading", Toast.LENGTH_SHORT).show();
 
         }
-        // do something with the preference data..
     }
 }
