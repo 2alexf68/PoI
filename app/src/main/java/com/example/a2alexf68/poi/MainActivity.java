@@ -234,10 +234,10 @@ public class MainActivity extends AppCompatActivity {
         public String doInBackground(String... params) {
             HttpURLConnection conn = null;
             try {
-                URL urlObj = new URL("http://www.free-map.org.uk/course/mad/ws/addhit.php");
+                URL urlObj = new URL("http://www.free-map.org.uk/course/mad/ws/add.php");
                 conn = (HttpURLConnection) urlObj.openConnection();
 
-                String postData = "username=user002&name" + params[0] + "&type=" + params[1] + "&description=" + params[2] + "&lat=" + params[3] + "&lon=" + params[4] + "&year=17";
+                String postData = "username=user039&name" + params[0] + "&type=" + params[1] + "&description=" + params[2] + "&lat=" + params[3] + "&lon=" + params[4] + "&year=17";
 
                 conn.setDoOutput(true);
                 conn.setFixedLengthStreamingMode(postData.length());

@@ -1,7 +1,18 @@
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+
+    <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <CheckBoxPreference
+            android:id="@+id/pref1"
+            android:defaultValue="true"
+            android:key="autodownload"
+            android:summary="Auto-save data?"
+            android:title="Auto-save" />
+    </PreferenceScreen>
 
     <TextView
         android:id="@+id/setting1"
@@ -17,3 +28,4 @@
         android:text="@string/pref1a"
         android:textSize="10pt" />
 </LinearLayout>
+
