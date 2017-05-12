@@ -104,10 +104,6 @@ public class MainActivity extends AppCompatActivity {
             LoadFromWeb lfw = new LoadFromWeb();
             lfw.execute();
             return true;
-        } else if (item.getItemId() == R.id.save_toweb) {
-            SaveToWeb stw = new SaveToWeb();
-            stw.execute();
-            return true;
         } else if (item.getItemId() == R.id.save_location) {
 
             try {
