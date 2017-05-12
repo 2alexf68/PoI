@@ -3,6 +3,7 @@ package com.example.a2alexf68.poi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -261,9 +262,25 @@ public class MainActivity extends AppCompatActivity {
             //new AlertDialog.Builder(getActivity()).setMessage("Uploaded!" + results).setPositiveButton("OK", null).show();
         }
     }
+/*
+    public void onStart() {//----this is not done yet
+        super.onStart();
+        if (!returned) { //---?
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            boolean autodownload = prefs.getBoolean("autodownload", true);
+            if (prefs.getBoolean("autosave", true)) {
+                Toast.makeText(this, "Auto save", Toast.LENGTH_SHORT).show();
+                upload = true;
+            } else {
+                Toast.makeText(this, "Not uploading", Toast.LENGTH_SHORT).show();
+                upload = false;
+            }
+            // do something with the preference data...
+        }
 
     public void upload(String name, String type, String desc, double lat, double lon) {
         SaveToWeb save = new SaveToWeb();
         save.execute(name, type, desc, String.valueOf(lat), String.valueOf(lon));
     }
+    */
 }
