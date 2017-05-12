@@ -38,8 +38,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     MapView mv;
-    boolean returnTick = false;
-    boolean uploadB = false;
     ItemizedIconOverlay<OverlayItem> items;
 
 
@@ -170,10 +168,8 @@ public class MainActivity extends AppCompatActivity {
                 double lon = mv.getMapCenter().getLongitude();
 
                 OverlayItem item = new OverlayItem(name, description, new GeoPoint(lat, lon));//--------------not done
-                if (uploadB) {
-                    upload(name, type, description, lat, lon);
-                    //name, type, description, String.valueOf(lat), String.valueOf(lon)
-                }
+                upload(name, type, description, lat, lon);
+
                 items.addItem(item);
             }
             // Force the map to redraw
@@ -263,30 +259,30 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        //execute to send the data from the web
-        public void onPostExecute(String results) {
-            // new AlertDialog.Builder(this.get().setMessage("Uploaded!" + results).setPositiveButton("OK", null).show(); //not finished
-        }
+    }
+
+    //execute to send the data from the web
+    public void onPostExecute(String results) {
+        //new AlertDialog.Builder(.setMessage("Uploaded!" + results).setPositiveButton("OK", null).show(); //not finished
     }
 
     public void onStart() {//------------------this is not done yet
         super.onStart();
-        if (!returnTick) {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            boolean autodownload = prefs.getBoolean("autodownload", true);
-            if (prefs.getBoolean("autosave", true)) {
-                Toast.makeText(this, "Auto save", Toast.LENGTH_SHORT).show();
-                uploadB = true;
-            } else {
-                Toast.makeText(this, "Not uploading", Toast.LENGTH_SHORT).show();//------------------not working only shows auto save
-                uploadB = false;
-            }
-            // do something with the preference data...
-        }
+
     }
 
     public void upload(String name, String type, String description, double lat, double lon) {
-        SaveToWeb save = new SaveToWeb();
-        save.execute(name, type, description, String.valueOf(lat), String.valueOf(lon));
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        boolean autosave= prefs.getBoolean("autodownload", true);
+        if (autosave) {
+            Toast.makeText(this, "Auto save", Toast.LENGTH_SHORT).show();
+
+            SaveToWeb save = new SaveToWeb();
+            save.execute(name, type, description, String.valueOf(lat), String.valueOf(lon));
+        } else {
+            Toast.makeText(this, "Not uploading", Toast.LENGTH_SHORT).show();//------------------not working only shows auto save
+
+        }
+        // do something with the preference data..
     }
 }

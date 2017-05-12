@@ -2,7 +2,7 @@
     <CheckBoxPreference
         android:id="@+id/pref1"
         android:defaultValue="true"
-        android:key="autodownload"
+        android:key="autosave"
         android:summary="Auto-save data?"
-        android:title="Auto-save" />
+        android:title="Auto Save" />
 </PreferenceScreen>
